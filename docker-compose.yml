@@ -1,0 +1,72 @@
+version: '3.8'
+networks:
+  cassnet: 
+services:
+  dc1n1:
+      image: cassandra
+      networks: [ "cassnet" ]
+      environment:
+          - CASSANDRA_DATACENTER=DC1
+          - CASSANDRA_INITIAL_TOKEN=-9223372036854775806
+          - MAX_HEAP_SIZE=1500m
+          - HEAP_NEWSIZE=600m
+      deploy:
+        resources:
+          limits:
+            cpus: "2"
+            memory: "3000M"
+      ports:
+          - "9042:9042"
+      volumes:
+          - "./docker-entrypoint.sh:/docker-entrypoint.sh" 
+  dc1n2:
+      image: cassandra
+      networks: [ "cassnet" ]
+      environment:
+          - CASSANDRA_DATACENTER=DC1
+          - CASSANDRA_INITIAL_TOKEN=2
+          - MAX_HEAP_SIZE=1500m
+          - HEAP_NEWSIZE=600m
+      deploy:
+        resources:
+          limits:
+            cpus: "2"
+            memory: "3000M"
+      ports:
+          - "9043:9042"
+      volumes:
+          - "./docker-entrypoint.sh:/docker-entrypoint.sh"
+  dc2n1:
+      image: cassandra
+      networks: [ "cassnet" ]
+      environment:
+          - CASSANDRA_DATACENTER=DC2
+          - CASSANDRA_INITIAL_TOKEN=-9223372036854775805
+          - MAX_HEAP_SIZE=1500m
+          - HEAP_NEWSIZE=600m
+      deploy:
+        resources:
+          limits:
+            cpus: "2"
+            memory: "3000M"
+      ports:
+          - "9052:9042"
+      volumes:
+          - "./docker-entrypoint.sh:/docker-entrypoint.sh" 
+  dc2n2:
+      image: cassandra
+      networks: [ "cassnet" ]
+      environment:
+          - CASSANDRA_DATACENTER=DC2
+          - CASSANDRA_INITIAL_TOKEN=3
+          - MAX_HEAP_SIZE=1500m
+          - HEAP_NEWSIZE=600m
+      deploy:
+        resources:
+          limits:
+            cpus: "2"
+            memory: "3000M"
+      ports:
+          - "9053:9042"
+      volumes:
+          - "./docker-entrypoint.sh:/docker-entrypoint.sh"
